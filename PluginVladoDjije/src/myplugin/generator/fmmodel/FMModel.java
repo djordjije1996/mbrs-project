@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FMModel {
 	
-	private List<FMClass> classes = new ArrayList<FMClass>();
+	private List<FMEntity> entities = new ArrayList<FMEntity>();
 	private List<FMEnumeration> enumerations = new ArrayList<FMEnumeration>();
 	
 	//....
@@ -28,11 +28,11 @@ public class FMModel {
 		return model;
 	}
 	
-	public List<FMClass> getClasses() {
-		return classes;
+	public List<FMEntity> getEntities() {
+		return entities;
 	}
-	public void setClasses(List<FMClass> classes) {
-		this.classes = classes;
+	public void setEntities(List<FMEntity> entities) {
+		this.entities = entities;
 	}
 	public List<FMEnumeration> getEnumerations() {
 		return enumerations;

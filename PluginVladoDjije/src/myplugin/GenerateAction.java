@@ -68,7 +68,7 @@ class GenerateAction extends MDAction{
 				try {
 					out = new BufferedWriter(new OutputStreamWriter(
 							new FileOutputStream(fileName), "UTF8"));					
-					xstream.toXML(FMModel.getInstance().getClasses(), out);
+					xstream.toXML(FMModel.getInstance().getEntities(), out);
 					xstream.toXML(FMModel.getInstance().getEnumerations(), out);
 					
 				} catch (UnsupportedEncodingException e) {

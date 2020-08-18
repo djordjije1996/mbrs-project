@@ -3,21 +3,35 @@ package myplugin.generator.fmmodel;
 
 public class FMProperty extends FMElement  {
 	//Property type
-	private String type;
+	private FMType type;
 	// Property visibility (public, private, protected, package)
 	private String visibility;
 	//Multiplicity (lower value)
 	private Integer lower;
 	//Multiplicity (upper value) 
 	private Integer upper;
-	
+	//name of column
+	private String colName;
+	public String getColName() {
+		return colName;
+	}
+	public void setColName(String colName) {
+		this.colName = colName;
+	}
 	/** @ToDo: Add length, precision, unique... whatever is needed for ejb class generation
 	 * Also, provide these meta-attributes or tags in the modeling languange metaclass or 
 	 * stereotype */
-
 	
-	public FMProperty(String name, String type, String visibility, int lower, int upper) {
+	public FMProperty() {
+		
+	}
+	public FMProperty(String name, String visibility) {
 		super(name);
+		this.visibility = visibility;
+	}
+	
+	public FMProperty( FMType type, String visibility, int lower, int upper) {
+		super();
 		this.type = type;
 		this.visibility = visibility;
 		
@@ -25,10 +39,10 @@ public class FMProperty extends FMElement  {
 		this.upper = upper;		
 	}
 	
-	public String getType() {
+	public FMType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(FMType type) {
 		this.type = type;
 	}
 	public String getVisibility() {

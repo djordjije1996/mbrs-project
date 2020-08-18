@@ -4,9 +4,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMEntity;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMPersistentProperty;
+import myplugin.generator.fmmodel.FMLinkedProperty;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMType;
 
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -17,6 +21,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Type;
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 
 /** Model Analyzer takes necessary metadata from the MagicDraw model and puts it in 
@@ -46,7 +51,7 @@ public class ModelAnalyzer {
 	}
 	
 	public void prepareModel() throws AnalyzeException {
-		FMModel.getInstance().getClasses().clear();
+		FMModel.getInstance().getEntities().clear();
 		FMModel.getInstance().getEnumerations().clear();
 		processPackage(root, filePackage);
 	}
@@ -69,8 +74,8 @@ public class ModelAnalyzer {
 				Element ownedElement = it.next();
 				if (ownedElement instanceof Class) {
 					Class cl = (Class)ownedElement;
-					FMClass fmClass = getClassData(cl, packageName);
-					FMModel.getInstance().getClasses().add(fmClass);
+					FMEntity fmEntity = getEntityData(cl, packageName);
+					FMModel.getInstance().getEntities().add(fmEntity);
 				}
 				
 				if (ownedElement instanceof Enumeration) {
@@ -84,7 +89,7 @@ public class ModelAnalyzer {
 				Element ownedElement = it.next();
 				if (ownedElement instanceof Package) {					
 					Package ownedPackage = (Package)ownedElement;
-					if (StereotypesHelper.getAppliedStereotypeByString(ownedPackage, "BusinessApp") != null)
+					if (StereotypesHelper.getAppliedStereotypeByString(ownedPackage, "BackendApp") != null)
 						//only packages with stereotype BusinessApp are candidates for metadata extraction and code generation:
 						processPackage(ownedPackage, packageName);
 				}
@@ -95,51 +100,70 @@ public class ModelAnalyzer {
 		}
 	}
 	
-	private FMClass getClassData(Class cl, String packageName) throws AnalyzeException {
+	private FMEntity getEntityData(Class cl, String packageName) throws AnalyzeException {
 		if (cl.getName() == null) 
 			throw new AnalyzeException("Classes must have names!");
 		
-		FMClass fmClass = new FMClass(cl.getName(), packageName, cl.getVisibility().toString());
+		FMEntity fmEntity = new FMEntity(cl.getName(), packageName);
+		Stereotype stereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
+		if(stereotype != null) {
+			List<Property> tags = stereotype.getOwnedAttribute();
+			for (Property tag : tags) {
+				createProperty(tag, fmEntity, cl, stereotype);
+			}
+		}
 		Iterator<Property> it = ModelHelper.attributes(cl);
 		while (it.hasNext()) {
 			Property p = it.next();
-			FMProperty prop = getPropertyData(p, cl);
-			fmClass.addProperty(prop);	
+			//FMProperty prop = getPropertyData(p, cl);
+			//FMProperty fmProperty = PropertyAnalyzer.createPropertyData(p);
+			Boolean isPersistent = StereotypesHelper.hasStereotypeOrDerived(p, "PersistentProperty");
+			
+			if(isPersistent) {
+				FMPersistentProperty fmpp =  PropertyAnalyzer.createPersistentPropertyData(p);
+				fmEntity.getPersistentProperties().add(fmpp);
+				fmEntity.getProperties().add(fmpp);
+				
+			}
+			else {
+				FMLinkedProperty fmpl = PropertyAnalyzer.createLinkedPropertyData(p);
+				fmEntity.getLinkedProperties().add(fmpl);
+				fmEntity.getProperties().add(fmpl);
+				
+			}
+			
+			
 		}	
 		
 		/** @ToDo:
 		 * Add import declarations etc. */		
-		return fmClass;
+		return fmEntity;
 	}
-	
-	private FMProperty getPropertyData(Property p, Class cl) throws AnalyzeException {
-		String attName = p.getName();
-		if (attName == null) 
-			throw new AnalyzeException("Properties of the class: " + cl.getName() +
-					" must have names!");
-		Type attType = p.getType();
-		if (attType == null)
-			throw new AnalyzeException("Property " + cl.getName() + "." +
-			p.getName() + " must have type!");
+	private static void createProperty(Property tag, FMEntity fmEntity, Class magicClass, Stereotype stereotype) {
+		String tagName = tag.getName();
+
 		
-		String typeName = attType.getName();
-		if (typeName == null)
-			throw new AnalyzeException("Type ot the property " + cl.getName() + "." +
-			p.getName() + " must have name!");		
-			
-		int lower = p.getLower();
-		int upper = p.getUpper();
-		
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), 
-				lower, upper);
-		return prop;		
+		List<?> values = StereotypesHelper.getStereotypePropertyValue(magicClass, stereotype, tagName);
+
+		// switch za slucaj da bude potrebno jos tagova za Entity
+		// malo elegantniji pristup za razliku od svega ostalog
+		if(values.size() > 0) {
+			switch (tagName) {
+			case "tableName":
+				if(values.get(0) instanceof String) {	
+					String tableName = (String) values.get(0);
+					fmEntity.setTableName(tableName);
+				}
+				break;
+			}
+		}
 	}	
-	
+
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {
 		FMEnumeration fmEnum = new FMEnumeration(enumeration.getName(), packageName);
 		List<EnumerationLiteral> list = enumeration.getOwnedLiteral();
-		for (int i = 0; i < list.size() - 1; i++) {
-			EnumerationLiteral literal = list.get(i);
+		for (EnumerationLiteral literal : enumeration.getOwnedLiteral()) {
+			//EnumerationLiteral literal = list.get(i);
 			if (literal.getName() == null)  
 				throw new AnalyzeException("Items of the enumeration " + enumeration.getName() +
 				" must have names!");
