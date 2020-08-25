@@ -7,7 +7,7 @@ import ${import.typePackage};
 public class ${name} {  
 
 <#list persistentProperties as persistentProperty>
-	<#if persistentProperty.id>
+	<#if persistentProperty.id??>
 	@Id
 	</#if>
 	${persistentProperty.visibility} ${persistentProperty.type.typePackage} ${persistentProperty.type.name};

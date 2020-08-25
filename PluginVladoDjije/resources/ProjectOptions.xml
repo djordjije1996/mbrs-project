@@ -1,1 +1,28 @@
-OUTPUT_PATH=C:/temp
+<?xml version="1.0" encoding="UTF-8" ?>
+<myplugin.generator.options.SerializableProjectOptions>
+	<path> C:/temp </path>
+	<generatorOptions>
+		<entry>
+			<string>EJBGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/{0}/src/main/resources</outputPath>
+				<templateName>ejbclass</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>{0}.java</outputFileName>
+				<overwrite>false</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ControllerGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/{0}/src/main/resources</outputPath>
+				<templateName>controller</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>{0}Controller.java</outputFileName>
+				<overwrite>false</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+	</generatorOptions>
+</myplugin.generator.options.SerializableProjectOptions>

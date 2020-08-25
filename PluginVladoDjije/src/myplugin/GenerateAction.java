@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,7 +20,9 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.EJBGenerator;
+import myplugin.generator.GeneratorFactory;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -39,19 +43,30 @@ class GenerateAction extends MDAction{
 		
 		if (root == null) return;
 	
-		ModelAnalyzer analyzer = new ModelAnalyzer(root, "ejb");	
+		ModelAnalyzer analyzer = new ModelAnalyzer(root, "");	
 		
 		try {
 			analyzer.prepareModel();	
-			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("EJBGenerator");			
-			EJBGenerator generator = new EJBGenerator(go);
-			generator.generate();
-			/**  @ToDo: Also call other generators */ 
-			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + go.getOutputPath() +
-					                         ", package: " + go.getFilePackage());
+			Map<String,GeneratorOptions> go = ProjectOptions.getProjectOptions().getGeneratorOptions();
+			
+			for(String key : go.keySet()) {
+				BasicGenerator generator = GeneratorFactory.getGenerator(key, go.get(key));
+				if(generator != null) {
+					generator.generate();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Generator " + key + " not found.");
+				}
+			}
+			
+			JOptionPane.showMessageDialog(null, "Generate finished.");
+			
 			exportToXml();
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} 			
 	}
 	

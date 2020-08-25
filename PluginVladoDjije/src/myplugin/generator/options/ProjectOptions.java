@@ -10,6 +10,20 @@ import java.util.Map;
 
 public class ProjectOptions {
 	//List of UML 2.0 to java (or any other destination language) mappings	
+	private String path;
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public static void setProjectOptions(ProjectOptions projectOptions) {
+		ProjectOptions.projectOptions = projectOptions;
+	}
+
 	private List<TypeMapping> typeMappings = new ArrayList<TypeMapping>();
 	
 	//Hash map for linking generators with its options

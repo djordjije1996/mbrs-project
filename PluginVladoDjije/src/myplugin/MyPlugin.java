@@ -1,12 +1,15 @@
 package myplugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 import myplugin.generator.options.GeneratorOptions;
+import myplugin.generator.options.OptionsLoader;
 import myplugin.generator.options.ProjectOptions;
-
+import myplugin.generator.options.SerializableProjectOptions;
 
 import com.nomagic.actions.NMAction;
 import com.nomagic.magicdraw.actions.ActionsConfiguratorsManager;
@@ -28,11 +31,36 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from 
 		 * ProjectOptions.xml and take ejb generator options */
 		
+		
+		OptionsLoader optionsLoader = new OptionsLoader();
+		/*
+		try {			
+			SerializableProjectOptions projectOptions = optionsLoader.loadProjectOptionsFromXML(pluginDir, "ProjectOptions.xml");
+			ProjectOptions.getProjectOptions().setPath(projectOptions.getPath());
+			ProjectOptions.getProjectOptions().setGeneratorOptions(projectOptions.getGeneratorOptions());
+			ProjectOptions.getProjectOptions().setTypeMappings(projectOptions.getTypeMappings());
+	//		ProjectOptions.getProjectOptions().setStaticResources(projectOptions.getStaticResources());
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog( null, "Loading plugin options failed.");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog( null, e.getStackTrace());
+		}
+		*/
 		//for test purpose only:
-		GeneratorOptions ejbOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app", "ejbclass", "templates", "{0}.java", true, "ejb"); 				
+		GeneratorOptions ejbOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/model", "ejbclass", "templates", "{0}.java", true, "generated"); 				
+		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 				
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
-				
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ControllerGenerator", controllerOptions);
+		
+		controllerOptions.setTemplateDir(pluginDir + File.separator + controllerOptions.getTemplateDir());
 		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
+	
+		try {
+			optionsLoader.saveProjectOprionsToXML(pluginDir + "/ProjectOptions.xml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private NMAction[] getSubmenuActions()
