@@ -48,18 +48,26 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		}
 		*/
 		//for test purpose only:
-		GeneratorOptions ejbOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/model", "ejbclass", "templates", "{0}.java", true, "generated"); 				
-		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 				
-		StaticResource staticResource = new StaticResource("static", "Application.java", "C:/Users/User/Desktop/generated_app/run", "Application.java", false);
+		GeneratorOptions modelOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/model", "model", "templates", "{0}.java", true, "generated"); 				
+		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 
+		GeneratorOptions repositoryOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/repository", "repository", "templates", "{0}Repository.java", true, "generated");
+		GeneratorOptions serviceOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/service", "service", "templates", "{0}Service.java", true, "generated");
+		GeneratorOptions enumerationOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/enumeration", "enumeration", "templates", "{0}.java", true, "generated"); 				
+		StaticResource staticResource = new StaticResource("static", "Application.java", "C:/Users/Vlado/Desktop/generated_app/run", "Application.java", false);
 		
 		
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelGenerator", modelOptions);
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ControllerGenerator", controllerOptions);
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RepositoryGenerator", repositoryOptions);
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ServiceGenerator", serviceOptions);
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EnumerationGenerator", enumerationOptions);
 		ProjectOptions.getProjectOptions().getStaticResources().add(staticResource);
 		
 		controllerOptions.setTemplateDir(pluginDir + File.separator + controllerOptions.getTemplateDir());
-		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); 
-		//staticResource.setDestinationFolder(pluginDir + File.separator + staticResource.getDestinationFolder()); //apsolutna putanja
+		modelOptions.setTemplateDir(pluginDir + File.separator + modelOptions.getTemplateDir()); //apsolutna putanja
+		repositoryOptions.setTemplateDir(pluginDir + File.separator + repositoryOptions.getTemplateDir());
+		serviceOptions.setTemplateDir(pluginDir + File.separator + serviceOptions.getTemplateDir());
+		enumerationOptions.setTemplateDir(pluginDir + File.separator + enumerationOptions.getTemplateDir());
 		staticResource.setSourceFolder(pluginDir + File.separator + staticResource.getSourceFolder());
 	
 		try {

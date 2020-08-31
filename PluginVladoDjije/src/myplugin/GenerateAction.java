@@ -1,6 +1,7 @@
 package myplugin;
 
 import java.awt.event.ActionEvent;
+
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +22,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.BasicGenerator;
-import myplugin.generator.EJBGenerator;
+import myplugin.generator.ModelGenerator;
 import myplugin.generator.GeneratorFactory;
 import myplugin.generator.StaticFilesGenerator;
 import myplugin.generator.fmmodel.FMModel;

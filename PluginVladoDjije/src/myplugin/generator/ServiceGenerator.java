@@ -12,6 +12,7 @@ import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEntity;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMPersistentProperty;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.util.ImportUtil;
 
@@ -24,9 +25,9 @@ import myplugin.util.ImportUtil;
  *        complete ejb classes
  */
 
-public class EJBGenerator extends BasicGenerator {
+public class ServiceGenerator extends BasicGenerator {
 
-	public EJBGenerator(GeneratorOptions generatorOptions) {
+	public ServiceGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -54,6 +55,14 @@ public class EJBGenerator extends BasicGenerator {
 					context.put("persistentProperties", cl.getPersistentProperties());
 					context.put("linkedProperties", cl.getLinkedProperties());
 					context.put("importedPackages", ImportUtil.uniqueTypesUsed(cl.getProperties()));
+					
+					for (FMPersistentProperty property : cl.getPersistentProperties()) {
+						if (property.getId()) {
+							context.put("id", property.getType().getTypePackage());
+							break;
+						}
+					}
+
 					getTemplate().process(context, out);
 					out.flush();
 				}

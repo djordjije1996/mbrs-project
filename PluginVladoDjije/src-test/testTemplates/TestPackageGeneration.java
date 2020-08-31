@@ -2,7 +2,9 @@ package testTemplates;
 
 import java.util.List;
 
-import myplugin.generator.EJBGenerator;
+
+
+import myplugin.generator.ModelGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
@@ -68,8 +70,8 @@ public class TestPackageGeneration {
 	
 	public void testGenerator() {
 		initModel();		
-		GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("EJBGenerator");	
-		EJBGenerator g = new EJBGenerator(go);
+		GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelGenerator");	
+		ModelGenerator g = new ModelGenerator(go);
 		g.generate();
 	}
 	
@@ -78,8 +80,8 @@ public class TestPackageGeneration {
 		/** @Todo: load project options from xml file */
 		
 		//for test purpose only:
-		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "ejbclass", "./resources/templates/", "{0}.java", true, "ejb"); 				
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
+		GeneratorOptions modelOptions = new GeneratorOptions("c:/temp", "model", "./resources/templates/", "{0}.java", true, "model"); 				
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelGenerator", modelOptions);
 				
 		tg.testGenerator();
 	}
