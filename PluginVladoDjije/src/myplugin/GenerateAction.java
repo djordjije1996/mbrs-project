@@ -23,6 +23,7 @@ import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.BasicGenerator;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.GeneratorFactory;
+import myplugin.generator.StaticFilesGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -58,6 +59,9 @@ class GenerateAction extends MDAction{
 					JOptionPane.showMessageDialog(null, "Generator " + key + " not found.");
 				}
 			}
+			
+			StaticFilesGenerator staticGen = new StaticFilesGenerator();
+			staticGen.generate();
 			
 			JOptionPane.showMessageDialog(null, "Generate finished.");
 			

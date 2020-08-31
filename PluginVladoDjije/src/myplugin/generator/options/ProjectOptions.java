@@ -31,6 +31,16 @@ public class ProjectOptions {
 	
 	private static ProjectOptions projectOptions = null; 
 	
+	private List<StaticResource> staticResources = new ArrayList<StaticResource>();
+	
+	public List<StaticResource> getStaticResources() {
+		return staticResources;
+	}
+
+	public void setStaticResources(List<StaticResource> staticResources) {
+		this.staticResources = staticResources;
+	}
+
 	public List<TypeMapping> getTypeMappings() {
 		return typeMappings;
 	}

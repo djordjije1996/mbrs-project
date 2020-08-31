@@ -10,6 +10,7 @@ import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.OptionsLoader;
 import myplugin.generator.options.ProjectOptions;
 import myplugin.generator.options.SerializableProjectOptions;
+import myplugin.generator.options.StaticResource;
 
 import com.nomagic.actions.NMAction;
 import com.nomagic.magicdraw.actions.ActionsConfiguratorsManager;
@@ -49,11 +50,17 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		//for test purpose only:
 		GeneratorOptions ejbOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/model", "ejbclass", "templates", "{0}.java", true, "generated"); 				
 		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 				
+		StaticResource staticResource = new StaticResource("static", "Application.java", "C:/Users/User/Desktop/generated_app/run", "Application.java", false);
+		
+		
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ControllerGenerator", controllerOptions);
+		ProjectOptions.getProjectOptions().getStaticResources().add(staticResource);
 		
 		controllerOptions.setTemplateDir(pluginDir + File.separator + controllerOptions.getTemplateDir());
-		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
+		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); 
+		//staticResource.setDestinationFolder(pluginDir + File.separator + staticResource.getDestinationFolder()); //apsolutna putanja
+		staticResource.setSourceFolder(pluginDir + File.separator + staticResource.getSourceFolder());
 	
 		try {
 			optionsLoader.saveProjectOprionsToXML(pluginDir + "/ProjectOptions.xml");
