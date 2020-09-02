@@ -28,13 +28,13 @@ public class StaticFilesGenerator {
 					return;
 				}
 				//kreiraj folder
-				/*
+				
 				if (!df.getParentFile().exists()) {
 					if (!df.getParentFile().mkdirs()) {
 						throw new IOException("An error occurred during output folder creation " + df.getParent());
 					}
 				}
-				*/
+				
 				//kopiraj fajl
 				String source = staticResource.getSourceFolder() + File.separator + staticResource.getSourceFilename();				
 				File sf = new File(source);
