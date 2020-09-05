@@ -26,7 +26,12 @@ public class GeneratorFactory {
 		else if(name.equals(EnumerationGenerator.class.getSimpleName())) {
 			return new EnumerationGenerator(options);
 		}
-		
+		else if(name.equals(PomXmlGenerator.class.getSimpleName())) {
+			return new PomXmlGenerator(options);
+		}
+		else if(name.equals(ApplicationYmlGenerator.class.getSimpleName())) {
+			return new ApplicationYmlGenerator(options);
+		}
 		else {
 			return null;
 		}

@@ -1,4 +1,4 @@
-package enumeration;
+package com.mbrs.enumeration;
 
 public enum ${enumeration.name?cap_first} {
 

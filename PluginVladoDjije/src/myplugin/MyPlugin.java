@@ -34,26 +34,35 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		
 		
 		OptionsLoader optionsLoader = new OptionsLoader();
-		/*
+		
 		try {			
 			SerializableProjectOptions projectOptions = optionsLoader.loadProjectOptionsFromXML(pluginDir, "ProjectOptions.xml");
 			ProjectOptions.getProjectOptions().setPath(projectOptions.getPath());
+			ProjectOptions.getProjectOptions().setProjectName(projectOptions.getProjectName());
+			ProjectOptions.getProjectOptions().setProjectPackage(projectOptions.getProjectPackage());
+			ProjectOptions.getProjectOptions().setDriverClassName(projectOptions.getDriverClassName());
+			ProjectOptions.getProjectOptions().setDbURL(projectOptions.getDbURL());
+			ProjectOptions.getProjectOptions().setDbUsername(projectOptions.getDbUsername());
+			ProjectOptions.getProjectOptions().setDbPassword(projectOptions.getDbPassword());
+			
+			
 			ProjectOptions.getProjectOptions().setGeneratorOptions(projectOptions.getGeneratorOptions());
-			ProjectOptions.getProjectOptions().setTypeMappings(projectOptions.getTypeMappings());
-	//		ProjectOptions.getProjectOptions().setStaticResources(projectOptions.getStaticResources());
+			//ProjectOptions.getProjectOptions().setTypeMappings(projectOptions.getTypeMappings());
+			ProjectOptions.getProjectOptions().setStaticResources(projectOptions.getStaticResources());
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog( null, "Loading plugin options failed.");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog( null, e.getStackTrace());
 		}
-		*/
+		
 		//for test purpose only:
-		GeneratorOptions modelOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/model", "model", "templates", "{0}.java", true, "generated"); 				
-		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 
-		GeneratorOptions repositoryOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/repository", "repository", "templates", "{0}Repository.java", true, "generated");
-		GeneratorOptions serviceOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/service", "service", "templates", "{0}Service.java", true, "generated");
-		GeneratorOptions enumerationOptions = new GeneratorOptions("C:/Users/Vlado/Desktop/generated_app/enumeration", "enumeration", "templates", "{0}.java", true, "generated"); 				
-		StaticResource staticResource = new StaticResource("static", "Application.java", "C:/Users/Vlado/Desktop/generated_app/run", "Application.java", false);
+		/*
+		GeneratorOptions modelOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/model", "model", "templates", "{0}.java", true, "generated"); 				
+		GeneratorOptions controllerOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/controller", "controller", "templates", "{0}Controller.java", true, "generated"); 
+		GeneratorOptions repositoryOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/repository", "repository", "templates", "{0}Repository.java", true, "generated");
+		GeneratorOptions serviceOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/service", "service", "templates", "{0}Service.java", true, "generated");
+		GeneratorOptions enumerationOptions = new GeneratorOptions("C:/Users/User/Desktop/generated_app/enumeration", "enumeration", "templates", "{0}.java", true, "generated"); 				
+		StaticResource staticResource = new StaticResource("static", "Application.java", "C:/Users/User/Desktop/generated_app/run", "Application.java", false);
 		
 		
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelGenerator", modelOptions);
@@ -69,13 +78,8 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		serviceOptions.setTemplateDir(pluginDir + File.separator + serviceOptions.getTemplateDir());
 		enumerationOptions.setTemplateDir(pluginDir + File.separator + enumerationOptions.getTemplateDir());
 		staticResource.setSourceFolder(pluginDir + File.separator + staticResource.getSourceFolder());
-	
-		try {
-			optionsLoader.saveProjectOprionsToXML(pluginDir + "/ProjectOptions.xml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		*/
+		
 	}
 
 	private NMAction[] getSubmenuActions()

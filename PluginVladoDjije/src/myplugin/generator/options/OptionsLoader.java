@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
@@ -21,16 +23,21 @@ public class OptionsLoader {
 		FileReader fileReader = new FileReader(path + File.separator + fileName);   
 		XStream xstream = new XStream(new StaxDriver());		
 		SerializableProjectOptions projectOptions = (SerializableProjectOptions) xstream.fromXML(fileReader);
+		//JOptionPane.showMessageDialog(null, projectOptions.getProjectPackage());
 		//podesavanje template datoteka na apsolutne putanje
 		for(GeneratorOptions generatorOptions:projectOptions.getGeneratorOptions().values()) {
 			generatorOptions.setTemplateDir(path + File.separator + generatorOptions.getTemplateDir());
+			generatorOptions.setOutputPath( projectOptions.getPath() +""+  generatorOptions.getOutputPath());
+			//JOptionPane.showMessageDialog(null, generatorOptions.getTemplateDir());
+			//JOptionPane.showMessageDialog(null, generatorOptions.getOutputPath());
 		}	
 		//podesavanje static resource datoteka na apsolutne putanje
-		/*
+		
 		for(StaticResource staticResource:projectOptions.getStaticResources()) {
 			staticResource.setSourceFolder(path + File.separator + staticResource.getSourceFolder());
+			staticResource.setDestinationFolder(projectOptions.getPath()+staticResource.getDestinationFolder());
 		}
-		*/
+		
 		return projectOptions;
 		
 	}

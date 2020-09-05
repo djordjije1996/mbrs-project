@@ -1,9 +1,10 @@
-package model;
+package com.mbrs.model;
 
 import javax.persistence.*;
 
 
-@Entity("${tableName}")
+@Entity
+@Table(name="${tableName}")
 public class ${name} {  
 
 <#-- PERSISTENT PROPERTIES  -->

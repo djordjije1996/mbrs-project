@@ -13,16 +13,77 @@ import java.util.Map;
 public class SerializableProjectOptions implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String path;
+	private String projectName;
+	private String projectPackage;
+	private String driverClassName;
+	private String dbURL;
+	private String dbUsername;
+	private String dbPassword;
 	private List<TypeMapping> typeMappings = new ArrayList<TypeMapping>();
 	private Map<String, GeneratorOptions> generatorOptions = new HashMap<String, GeneratorOptions>();
-	//private List<StaticResource> staticResources = new ArrayList<StaticResource>();
+	private List<StaticResource> staticResources = new ArrayList<StaticResource>();
 	
 	public SerializableProjectOptions(ProjectOptions projectOptions) {
+		path = projectOptions.getPath();
+		projectName = projectOptions.getProjectPackage();
+		projectPackage = projectOptions.getProjectPackage();
+		driverClassName = projectOptions.getDriverClassName();
+		dbURL = projectOptions.getDbURL();
+		dbPassword = projectOptions.getDbPassword();
+		dbUsername = projectOptions.getDbPassword();
 		typeMappings = projectOptions.getTypeMappings();
 		generatorOptions = projectOptions.getGeneratorOptions();
-		//staticResources = projectOptions.getStaticResources();
+		staticResources = projectOptions.getStaticResources();
 	}
 	
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectPackage() {
+		return projectPackage;
+	}
+
+	public void setProjectPackage(String projectPackage) {
+		this.projectPackage = projectPackage;
+	}
+	
+	public String getDriverClassName() {
+		return driverClassName;
+	}
+
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
+	}
+
+	public String getDbURL() {
+		return dbURL;
+	}
+
+	public void setDbURL(String dbURL) {
+		this.dbURL = dbURL;
+	}
+
+	public String getDbUsername() {
+		return dbUsername;
+	}
+
+	public void setDbUsername(String dbUsername) {
+		this.dbUsername = dbUsername;
+	}
+
+	public String getDbPassword() {
+		return dbPassword;
+	}
+
+	public void setDbPassword(String dbPassword) {
+		this.dbPassword = dbPassword;
+	}
+
 	public SerializableProjectOptions() {
 		super();
 	}
@@ -50,7 +111,7 @@ public class SerializableProjectOptions implements Serializable {
 	public void setGeneratorOptions(Map<String, GeneratorOptions> generatorOptions) {
 		this.generatorOptions = generatorOptions;
 	}
-/*
+
 	public List<StaticResource> getStaticResources() {
 		return staticResources;
 	}
@@ -58,5 +119,5 @@ public class SerializableProjectOptions implements Serializable {
 	public void setStaticResources(List<StaticResource> staticResources) {
 		this.staticResources = staticResources;
 	}
-	*/
+	
 }

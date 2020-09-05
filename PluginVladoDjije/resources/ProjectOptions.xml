@@ -1,28 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <myplugin.generator.options.SerializableProjectOptions>
-	<path> C:/temp </path>
+	<path>C:\Users\User\Desktop\perspektiva\gennerated-app2</path>
+	<projectPackage>com.mbrs</projectPackage>
+	<projectName>gennerated-app2</projectName>
+	<driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+	<dbURL>jdbc:mysql://localhost:3306/betting</dbURL>
+	<dbUsername>root</dbUsername>
+	<dbPassword>root</dbPassword>
+	<staticResources>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static</sourceFolder>
+			<sourceFilename>Application.java</sourceFilename>
+			<destinationFolder>/src/main/java/com/mbrs</destinationFolder>
+			<destinationFilename>Application.java</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static</sourceFolder>
+			<sourceFilename>mvnw</sourceFilename>
+			<destinationFolder>\</destinationFolder>
+			<destinationFilename>mvnw</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static</sourceFolder>
+			<sourceFilename>mvnw.cmd</sourceFilename>
+			<destinationFolder>\</destinationFolder>
+			<destinationFilename>mvnw.cmd</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+	</staticResources>
 	<generatorOptions>
 		<entry>
-			<string>EJBGenerator</string>
+			<string>ControllerGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
-				<outputPath>{path}/{0}/src/main/resources</outputPath>
-				<templateName>ejbclass</templateName>
+				<outputPath>\src\main\java\com\mbrs\controller</outputPath>
+				<templateName>controller</templateName>
 				<templateDir>templates</templateDir>
-				<outputFileName>{0}.java</outputFileName>
-				<overwrite>false</overwrite>
+				<outputFileName>{0}Controller.java</outputFileName>
+				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
-			<string>ControllerGenerator</string>
+			<string>RepositoryGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
-				<outputPath>{path}/{0}/src/main/resources</outputPath>
-				<templateName>controller</templateName>
+				<outputPath>\src\main\java\com\mbrs\repository</outputPath>
+				<templateName>repository</templateName>
 				<templateDir>templates</templateDir>
-				<outputFileName>{0}Controller.java</outputFileName>
-				<overwrite>false</overwrite>
+				<outputFileName>{0}Repository.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ModelGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>\src\main\java\com\mbrs\model</outputPath>
+				<templateName>model</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>{0}.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ServiceGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>\src\main\java\com\mbrs\service</outputPath>
+				<templateName>service</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>{0}Service.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>EnumerationGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>\src\main\java\com\mbrs\enumeration</outputPath>
+				<templateName>enumeration</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>{0}.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>PomXmlGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>\</outputPath>
+				<templateName>pom_xml</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>pom.xml</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ApplicationYmlGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>\src\main\resources</outputPath>
+				<templateName>application_yml</templateName>
+				<templateDir>templates</templateDir>
+				<outputFileName>application.properties</outputFileName>
+				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 	</generatorOptions>
+
 </myplugin.generator.options.SerializableProjectOptions>

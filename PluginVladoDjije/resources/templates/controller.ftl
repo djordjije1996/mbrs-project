@@ -1,7 +1,7 @@
-package controller;
+package com.mbrs.controller;
 
-import model.${name};
-import service.${name}Service;
+import com.mbrs.model.${name};
+import com.mbrs.service.${name}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

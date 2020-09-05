@@ -11,6 +11,10 @@ public class GeneratorOptions  {
 	private Boolean overwrite;
 	private String filePackage;
 	
+	public GeneratorOptions() {
+		super();
+	}
+	
 	public GeneratorOptions(String outputPath, String templateName,
 			String templateDir, String outputFileName, Boolean overwrite,
 			String filePackage) {

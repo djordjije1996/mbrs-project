@@ -1,10 +1,13 @@
-package service;
+package com.mbrs.service;
 
-import model.${name};
-import service.${name}Repository;
+import com.mbrs.model.${name};
+import com.mbrs.repository.${name}Repository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ${name}Service {

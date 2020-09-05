@@ -55,6 +55,8 @@ class GenerateAction extends MDAction{
 				BasicGenerator generator = GeneratorFactory.getGenerator(key, go.get(key));
 				if(generator != null) {
 					generator.generate();
+					
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Generator " + key + " not found.");
