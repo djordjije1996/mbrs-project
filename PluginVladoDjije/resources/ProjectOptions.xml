@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <myplugin.generator.options.SerializableProjectOptions>
-	<path>C:\Users\User\Desktop\perspektiva\gennerated-app2</path>
+	<path>C:\Users\Vlado\Desktop\perspektiva\gennerated-app2</path>
 	<projectPackage>com.mbrs</projectPackage>
 	<projectName>gennerated-app2</projectName>
 	<driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>

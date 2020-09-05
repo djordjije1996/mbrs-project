@@ -5,12 +5,21 @@ import com.mbrs.service.${name}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
-import java.util.Optional;
-import java.util.Set;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public abstract class ${name}Controller {
+@RequestMapping("/api/${name?lower_case}")
+@CrossOrigin
+public class ${name}Controller {
 
 @Autowired
 	protected ${name?cap_first}Service ${name?lower_case}Service;
@@ -27,7 +36,7 @@ public abstract class ${name}Controller {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<?> create(@RequestBody @Valid ${name?cap_first} ${name?lower_case}) {
+	public ResponseEntity<?> create(@RequestBody ${name?cap_first} ${name?lower_case}) {
 		${name?cap_first} ${name?lower_case}New = this.${name?lower_case}Service.save(${name?lower_case});
 		
 		return (${name?lower_case}New == null) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(${name?lower_case}New);
@@ -39,7 +48,7 @@ public abstract class ${name}Controller {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ${name?cap_first} ${name?lower_case}) {
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ${name?cap_first} ${name?lower_case}) {
 		${name?cap_first} updated${name?cap_first} = this.${name?lower_case}Service.update(id, ${name?lower_case});
 		
 		return (updated${name?cap_first} == null) ? ResponseEntity.badRequest().build() : ResponseEntity.ok(updated${name?cap_first});

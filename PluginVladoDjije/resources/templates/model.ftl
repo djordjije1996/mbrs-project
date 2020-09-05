@@ -1,6 +1,8 @@
 package com.mbrs.model;
 
 import javax.persistence.*;
+import com.mbrs.enumeration.Outcome;
+import java.util.Date;
 
 
 @Entity
@@ -15,35 +17,37 @@ public class ${name} {
 	<#else>
 	@Column
 	</#if>
+	<#if pp.type.typePackage == "date">
+	${pp.visibility} ${pp.type.typePackage?cap_first} ${pp.type.name};
+	<#else>
 	${pp.visibility} ${pp.type.typePackage} ${pp.type.name};
-</#list>
-
-<#-- LINKED PROPERTIES  -->
-<#list linkedProperties as lp>
-	<#if lp.upper == -1 && lp.oppositeEnd.upper == -1>@ManyToMany<#elseif lp.upper == -1 && lp.oppositeEnd.upper == 1>@OneToMany<#elseif lp.upper == 1 && lp.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
-	<#lt><#if (lp.fetch)?? || (lp.cascade)?? || (lp.mappedBy)?? || (lp.optional)?? || (lp.orphanRemoval)??>(<#rt>
-		<#if (lp.cascade)??>
-			<#lt>cascade = CascadeType.${lp.cascade}<#rt>
-		</#if>
-		<#if (lp.fetch)??>
-			<#lt><#if (lp.cascade)??>, </#if>fetch = FetchType.${lp.fetch}<#rt>
-		</#if>
-		<#if (lp.mappedBy)??>
-			<#lt><#if (lp.cascade)?? || (lp.fetch)??>, </#if>mappedBy = "${lp.mappedBy}"<#rt>
-		</#if>
-		<#if (lp.optional)??>
-			<#lt><#if (lp.cascade)?? || (lp.fetch)?? || (lp.mappedBy)??>, </#if>optional = ${lp.optional?c}<#rt>
-		</#if>
-		<#if (lp.orphanRemoval)??>
-			<#lt><#if (lp.cascade)?? || (lp.fetch)?? || (lp.mappedBy)?? || (lp.optional)??>, </#if>orphanRemoval = ${lp.orphanRemoval?c}<#rt>
-		</#if>
-		<#lt>)</#if>
-	<#if lp.upper == 1 >   
-	${lp.visibility} ${lp.type.typePackage} ${lp.type.name};
-	<#else> 
-	${lp.visibility} Set<${lp.type.typePackage}> ${lp.type.name} = new HashSet<${lp.type.typePackage}>();	
 	</#if>
 </#list>
+
+	<#-- LINKED PROPERTIES  -->
+	<#list linkedProperties as property>
+	<#if property.upper == -1 && property.oppositeEnd.upper == -1>@ManyToMany<#elseif property.upper == -1 && property.oppositeEnd.upper == 1>@OneToMany<#elseif property.upper == 1 && property.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
+	<#lt><#if (property.fetch)?? || (property.cascade)?? || (property.mappedBy)?? || (property.optional)??>(<#rt>
+		<#if (property.cascade)??>
+			<#lt>cascade = CascadeType.${property.cascade}<#rt>
+		</#if>
+		<#if (property.fetch)??>
+			<#lt><#if (property.cascade)??>, </#if>fetch = FetchType.${property.fetch}<#rt>
+		</#if>
+		<#if (property.mappedBy)??>
+			<#lt><#if (property.cascade)?? || (property.fetch)??>, </#if>mappedBy = "${property.mappedBy}"<#rt>
+		</#if>
+		<#if (property.optional)??>
+			<#lt><#if (property.cascade)?? || (property.fetch)?? || (property.mappedBy)??>, </#if>optional = ${property.optional?c}<#rt>
+		</#if>
+		<#lt>)</#if>	
+	<#if property.upper == 1>
+	${property.visibility} ${property.type.typePackage} ${property.type.name};
+	<#else>
+	${property.visibility} Set<${property.type.typePackage}> ${property.type.name} = new HashSet<${property.type.tyePackage}>();	
+	</#if>${'\n'}
+	</#list>
+
 	
 <#--CONSTRUCTORS#-->
 	public ${name}() {
@@ -54,13 +58,19 @@ public class ${name} {
 	<#list persistentProperties as pp>
 	<#if pp.type.typePackage == "boolean">
 	public ${pp.type.typePackage} is${pp.type.name?cap_first}() {
+	<#elseif pp.type.typePackage == "date">
+	public ${pp.type.typePackage?cap_first} get${pp.type.name?cap_first}() {
 	<#else>
 	public ${pp.type.typePackage} get${pp.type.name?cap_first}() {
 	</#if>      
 		return ${pp.type.name};
 	}
 <#--PERSISTENT PROPERTY SETTERS-->
+	<#if pp.type.typePackage == "date">
+	public void set${pp.type.name?cap_first}(${pp.type.typePackage?cap_first} ${pp.type.name}) {
+	<#else>
 	public void set${pp.type.name?cap_first}(${pp.type.typePackage} ${pp.type.name}) {
+	</#if>
 		this.${pp.type.name} = ${pp.type.name};
 	}
 	</#list>
@@ -78,12 +88,12 @@ public class ${name} {
 	<#lt> get${lp.type.name?cap_first}() {
 		return ${lp.type.name};
 	}
-<#--LINKED PROPERTY GETTERS AND SETTERS-->
-	public void set${lp.type.name?cap_first}(<#rt>
+<#--LINKED PROPERTY SETTERS-->
+	public void set${lp.type.typePackage}(<#rt>
 	<#if lp.upper == -1>
 		<#lt>Set<<#rt> 
 	</#if>
-	<#lt>${lp.type.name}<#rt>
+	<#lt>${lp.type.typePackage?cap_first}<#rt>
 	<#if lp.upper == -1>
 		<#lt>><#rt> 
 	</#if>
